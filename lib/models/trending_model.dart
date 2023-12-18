@@ -10,7 +10,7 @@ String newsToJson(News data) => json.encode(data.toJson());
 
 class News {
     final String status;
-    final int totalResults;
+    final String totalResults;
     final List<Article> articles;
 
     News({
@@ -20,14 +20,14 @@ class News {
     });
 
     factory News.fromJson(Map<String, dynamic> json) => News(
-        status: json["status"],
-        totalResults: json["totalResults"],
+        status: json["status"].toString(),
+        totalResults: json["totalResults"].toString(),
         articles: List<Article>.from(json["articles"].map((x) => Article.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
-        "status": status,
-        "totalResults": totalResults,
+        "status": status.toString(),
+        "totalResults": totalResults.toString(),
         "articles": List<dynamic>.from(articles.map((x) => x.toJson())),
     };
 }
@@ -39,7 +39,7 @@ class Article {
     final String description;
     final String url;
     final String urlToImage;
-    final DateTime publishedAt;
+    final String publishedAt;
     final String content;
 
     Article({
@@ -55,24 +55,24 @@ class Article {
 
     factory Article.fromJson(Map<String, dynamic> json) => Article(
         source: Source.fromJson(json["source"]),
-        author: json["author"],
-        title: json["title"],
-        description: json["description"],
-        url: json["url"],
-        urlToImage: json["urlToImage"],
-        publishedAt: DateTime.parse(json["publishedAt"]),
-        content: json["content"],
+        author: json["author"].toString(),
+        title: json["title"].toString(),
+        description: json["description"].toString(),
+        url: json["url"].toString(),
+        urlToImage: json["urlToImage"].toString(),
+        publishedAt: json["publishedAt"].toString(),
+        content: json["content"].toString(),
     );
 
     Map<String, dynamic> toJson() => {
         "source": source.toJson(),
-        "author": author,
-        "title": title,
-        "description": description,
-        "url": url,
-        "urlToImage": urlToImage,
-        "publishedAt": publishedAt.toIso8601String(),
-        "content": content,
+        "author": author.toString(),
+        "title": title.toString(),
+        "description": description.toString(),
+        "url": url.toString(),
+        "urlToImage": urlToImage.toString(),
+        "publishedAt": publishedAt.toString(),
+        "content": content.toString(),
     };
 }
 
@@ -86,8 +86,8 @@ class Source {
     });
 
     factory Source.fromJson(Map<String, dynamic> json) => Source(
-        id: json["id"],
-        name: json["name"],
+        id: json["id"].toString(),
+        name: json["name"].toString(),
     );
 
     Map<String, dynamic> toJson() => {
