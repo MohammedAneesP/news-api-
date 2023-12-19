@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:news_api/services/trending_api.dart';
+import 'package:news_api/services/api_services/trending_api.dart';
 
 part 'trending_news_event.dart';
 part 'trending_news_state.dart';

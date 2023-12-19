@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_api/application/trending/trending_news_bloc.dart';
+import 'package:news_api/application/breaking/breaking_news_bloc.dart';
 
-class TrendingNews extends StatelessWidget {
-  const TrendingNews({super.key});
+class BreakingNews extends StatelessWidget {
+  const BreakingNews({super.key});
 
   @override
   Widget build(BuildContext context) {
-   BlocProvider.of<TrendingNewsBloc>(context).add(FetchTrending());
+   BlocProvider.of<BreakingNewsBloc>(context).add(FetchBreaking());
     final kheight = MediaQuery.sizeOf(context);
     final kWidth = MediaQuery.sizeOf(context);
     return Scaffold(
@@ -21,7 +21,7 @@ class TrendingNews extends StatelessWidget {
               fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
         ),
       ),
-      body: BlocBuilder<TrendingNewsBloc, TrendingNewsState>(
+      body: BlocBuilder<BreakingNewsBloc, BreakingNewsState>(
         builder: (context, state) {
           return ListView.separated(
             physics: const ClampingScrollPhysics(),
@@ -36,7 +36,7 @@ class TrendingNews extends StatelessWidget {
                     children: [
                       CachedNetworkImage(
                         imageUrl:
-                            state.trending[index].urlToImage.toString(),
+                            state.breakingNews[index].urlToImage.toString(),
                         imageBuilder: (context, imageProvider) => Container(
                           margin: EdgeInsets.only(left: kWidth.width * 0.007),
                           width: kWidth.width * 0.25,
@@ -57,7 +57,7 @@ class TrendingNews extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              state.trending[index].title,
+                              state.breakingNews[index].title,
                               maxLines: 4,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(fontSize: 18),
@@ -69,10 +69,11 @@ class TrendingNews extends StatelessWidget {
               );
             },
             separatorBuilder: (context, index) =>const Divider(),
-            itemCount: state.trending.length,
+            itemCount: state.breakingNews.length,
           );
         },
       ),
     );
   }
 }
+

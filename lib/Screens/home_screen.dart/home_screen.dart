@@ -2,7 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_api/Screens/breaking_news/braking_news.dart';
 import 'package:news_api/Screens/trending_news/trending_newa.dart';
+import 'package:news_api/application/breaking/breaking_news_bloc.dart';
 import 'package:news_api/application/trending/trending_news_bloc.dart';
 import 'package:news_api/models/categoy.dart';
 import 'package:news_api/services/category_image.dart';
@@ -13,6 +15,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<TrendingNewsBloc>(context).add(FetchTrending());
+    BlocProvider.of<BreakingNewsBloc>(context).add(FetchBreaking());
     final theCategories = theNameAndImage();
     final kheight = MediaQuery.sizeOf(context);
     final kWidth = MediaQuery.sizeOf(context);
@@ -34,34 +37,90 @@ class HomeScreen extends StatelessWidget {
             SideHeading(
                 textOne: 'Breaking News',
                 textTwo: "View all",
-                anOnPressed: () {}),
-            CarouselSlider(
-              options: CarouselOptions(
-                  height: 200.0,
-                  autoPlay: true,
-                  enlargeCenterPage: true,
-                  viewportFraction: 1),
-              items: theCategories.map(
-                (i) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25),
-                            color: Colors.grey.withOpacity(0.1),
-                            image: DecorationImage(
-                                image: AssetImage(i.anImage),
-                                fit: BoxFit.cover),
-                          ),
-                        ),
-                      );
-                    },
+                anOnPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) =>const BreakingNews(),));
+                }),
+            BlocBuilder<BreakingNewsBloc, BreakingNewsState>(
+              builder: (context, state) {
+                if (state.isLoading == true) {
+                  return const Center(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   );
-                },
-              ).toList(),
+                } else if (state.breakingNews.isEmpty) {
+                  return SizedBox(
+                    height: kheight.height * 0.2,
+                    child: const Center(
+                      child: Text("Something Went Wrong"),
+                    ),
+                  );
+                } else {
+                  return CarouselSlider(
+                    options: CarouselOptions(
+                        height: kheight.height * .25,
+                        autoPlay: true,
+                        enlargeCenterPage: true,
+                        viewportFraction: 1),
+                    items: state.breakingNews.map(
+                      (i) {
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return GestureDetector(
+                              onTap: () {},
+                              child: CachedNetworkImage(
+                                imageUrl: i.urlToImage,
+                                imageBuilder: (context, imageProvider) {
+                                  return Stack(
+                                    alignment: Alignment.bottomCenter,
+                                    children: [
+                                      Container(
+                                          margin: const EdgeInsets.symmetric(
+                                              horizontal: 10.0),
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.cover,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(15))),
+                                      Container(
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 10.0),
+                                        height: kheight.height * .07,
+                                        width: kWidth.width,
+                                        decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(15),
+                                              bottomRight: Radius.circular(15)),
+                                          color: Colors.black54,
+                                        ),
+                                        child: Center(
+                                          child: Text(i.title,
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 2,
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.white)),
+                                        ),
+                                      )
+                                    ],
+                                  );
+                                },
+                                placeholder: (context, url) => const Center(
+                                    child: CircularProgressIndicator()),
+                                errorWidget: (context, url, error) =>
+                                    const Icon(Icons.error),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ).toList(),
+                  );
+                }
+              },
             ),
             SideHeading(
                 textOne: "Trending News",
