@@ -37,8 +37,21 @@ class HomeScreen extends StatelessWidget {
             SideHeading(
                 textOne: 'Breaking News',
                 textTwo: "View all",
-                anOnPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) =>const BreakingNews(),));
+                anOnPressed: () async {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const BreakingNews(),
+                      ));
+                  showDialog(
+                    context: context,
+                    builder: (context) => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+
+                  await Future.delayed(Duration(seconds: 2));
+                  Navigator.pop(context);
                 }),
             BlocBuilder<BreakingNewsBloc, BreakingNewsState>(
               builder: (context, state) {
@@ -56,13 +69,15 @@ class HomeScreen extends StatelessWidget {
                     ),
                   );
                 } else {
+                  final breakingList =
+                      List.generate(6, (index) => state.breakingNews[index]);
                   return CarouselSlider(
                     options: CarouselOptions(
                         height: kheight.height * .25,
                         autoPlay: true,
                         enlargeCenterPage: true,
                         viewportFraction: 1),
-                    items: state.breakingNews.map(
+                    items: breakingList.map(
                       (i) {
                         return Builder(
                           builder: (BuildContext context) {
