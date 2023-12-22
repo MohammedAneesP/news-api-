@@ -1,30 +1,13 @@
-import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_api/application/breaking/breaking_news_bloc.dart';
 
-class BreakingNews extends StatefulWidget {
+class BreakingNews extends StatelessWidget {
   const BreakingNews({super.key});
 
   @override
-  State<BreakingNews> createState() => _BreakingNewsState();
-}
-
-final anController = ScrollController();
-
-class _BreakingNewsState extends State<BreakingNews> {
-  @override
-  void initState() {
-    anController.addListener(() {
-      if (anController.position.maxScrollExtent == anController.offset) {
-        BlocProvider.of<BreakingNewsBloc>(context).add(FetchBreaking());
-        log("andi");
-      }
-    });
-    super.initState();
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -51,20 +34,13 @@ class _BreakingNewsState extends State<BreakingNews> {
               child: Text("No data"),
             );
           } else {
-            // Future.delayed(
-            // const  Duration(seconds: 2),
-            //   () => showDialog(
-            //     context: context,
-            //     builder: (context) =>const Center(
-            //       child: CircularProgressIndicator(),
-            //     ),
-            //   ),
-            // );
-            // Navigator.pop(context);
             return ListView.separated(
-              controller: anController,
               physics: const ClampingScrollPhysics(),
               itemBuilder: (context, index) {
+                if (index == state.breakingNews.length - 1) {
+                  BlocProvider.of<BreakingNewsBloc>(context)
+                      .add(PaginationFetch());
+                }
                 return SizedBox(
                   height: kheight.height * 0.15,
                   child: SizedBox(
@@ -109,7 +85,7 @@ class _BreakingNewsState extends State<BreakingNews> {
                 );
               },
               separatorBuilder: (context, index) => const Divider(),
-              itemCount: 25,
+              itemCount: state.breakingNews.length,
             );
           }
         },

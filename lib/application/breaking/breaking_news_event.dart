@@ -4,3 +4,5 @@ part of 'breaking_news_bloc.dart';
 sealed class BreakingNewsEvent {}
 
 class FetchBreaking extends BreakingNewsEvent{}
+
+class PaginationFetch extends BreakingNewsEvent{}
