@@ -10,7 +10,6 @@ part 'breaking_news_event.dart';
 part 'breaking_news_state.dart';
 
 List<Article> forBreaking = [];
-bool isAdding = false;
 
 class BreakingNewsBloc extends Bloc<BreakingNewsEvent, BreakingNewsState> {
   BreakingNewsBloc() : super(BreakingNewsInitial()) {
@@ -68,10 +67,7 @@ class BreakingNewsBloc extends Bloc<BreakingNewsEvent, BreakingNewsState> {
               }
             }
           }
-          final toAddNew =
-              List.generate(forPaginate.length, (index) => forPaginate[index]);
-          forBreaking.addAll(toAddNew);
-          isAdding =true;
+          forBreaking.addAll(forPaginate);
           return emit(BreakingNewsState(
               breakingNews: forBreaking, errorMessage: "", isLoading: false));
         }

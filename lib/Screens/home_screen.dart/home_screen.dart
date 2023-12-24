@@ -50,7 +50,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   );
 
-                  await Future.delayed(Duration(seconds: 2));
+                  await Future.delayed(const Duration(seconds: 2));
                   Navigator.pop(context);
                 }),
             BlocBuilder<BreakingNewsBloc, BreakingNewsState>(

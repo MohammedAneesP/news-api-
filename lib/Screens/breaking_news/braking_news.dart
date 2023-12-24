@@ -7,8 +7,6 @@ class BreakingNews extends StatelessWidget {
   const BreakingNews({super.key});
 
   @override
-  
-
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<BreakingNewsBloc>(context).add(FetchBreaking());
