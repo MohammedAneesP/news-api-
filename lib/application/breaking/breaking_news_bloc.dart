@@ -17,7 +17,7 @@ class BreakingNewsBloc extends Bloc<BreakingNewsEvent, BreakingNewsState> {
       try {
         News breakNews = await fetchingBreaking();
         forBreaking.clear();
-        if (breakNews.status == "ok") {
+        if (breakNews.status != "null") {
           final theBreaking = List.generate(20, (index) {
             if (breakNews.articles[index].urlToImage != "null") {
               return breakNews.articles[index];
@@ -54,7 +54,6 @@ class BreakingNewsBloc extends Bloc<BreakingNewsEvent, BreakingNewsState> {
                   if (response.statusCode == HttpStatus.ok) {
                     if (count <= 20) {
                       count++;
-                      log(element.title);
                       forPaginate.add(element);
                     } else {
                       break;

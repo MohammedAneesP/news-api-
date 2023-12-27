@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 Future<News> fetchingNews() async {
   final anValue = Uri.parse(
-      "https://newsapi.org/v2/top-headlines?country=in&apiKey=$apiKey");
+      "https://newsapi.org/v2/top-headlines?country=in&pageSize=50&apiKey=$apiKey");
   final anResp = await http.get(anValue);
 
   if (anResp.statusCode == HttpStatus.ok) {

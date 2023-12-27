@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_api/Screens/splash_screen/splash_screen.dart';
 import 'package:news_api/application/breaking/breaking_news_bloc.dart';
+import 'package:news_api/application/search/new_search/new_search_bloc.dart'; 
 import 'package:news_api/application/trending/trending_news_bloc.dart';
 
 void main() {
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => TrendingNewsBloc()),
         BlocProvider(create: (context) => BreakingNewsBloc()),
+        BlocProvider(create: (context) => NewSearchBloc()),
       ],
       child: MaterialApp(
         theme: ThemeData(
