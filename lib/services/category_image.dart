@@ -1,13 +1,17 @@
+import 'package:news_api/Screens/categories/business/business_news.dart';
+import 'package:news_api/Screens/categories/entertainment/entertainment.dart';
+import 'package:news_api/Screens/categories/health/health_news.dart';
+import 'package:news_api/Screens/categories/science/science_news.dart';
+import 'package:news_api/Screens/categories/sports/sports.dart';
 import 'package:news_api/models/categoy.dart';
 
 List<CategoryAndName> theNameAndImage() {
   List<CategoryAndName> anList = [];
-  
+
   final List<String> categoryName = [
     "Business",
     "Entertainmet",
     "Health",
-    "News",
     "Science",
     "Sports"
   ];
@@ -17,11 +21,19 @@ List<CategoryAndName> theNameAndImage() {
   }
   return anList;
 }
+
+final List<dynamic> categories = [
+  const Business(),
+  const Entertainmet(),
+  const Health(),
+  const Sceince(),
+  const Sports(),
+];
+
 List<String> images = [
-    "assets/business.jpg",
-    "assets/entertainment.jpg",
-    "assets/health.webp",
-    "assets/news.jpg",
-    "assets/science.webp",
-    "assets/sports.avif",
-  ];
+  "assets/business.jpg",
+  "assets/entertainment.jpg",
+  "assets/health.webp",
+  "assets/science.webp",
+  "assets/sports.avif",
+];

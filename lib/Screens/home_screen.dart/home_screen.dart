@@ -281,7 +281,14 @@ class CategoryHome extends StatelessWidget {
             height: kheight.height * 0.001,
           ),
           itemBuilder: (context, index) => GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => categories[index],
+                ),
+              );
+            },
             child: Stack(
               children: [
                 Container(
