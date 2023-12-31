@@ -24,7 +24,7 @@ List<CategoryAndName> theNameAndImage() {
 
 final List<dynamic> categories = [
   const Business(),
-  const Entertainmet(),
+  const Entertainmet(anCategory: "entertainment"),
   const Health(),
   const Sceince(),
   const Sports(),

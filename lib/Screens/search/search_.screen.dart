@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_api/application/search/new_search/new_search_bloc.dart';
 
-bool loading = false;
-
 class SearchScreen extends StatelessWidget {
   SearchScreen({super.key});
 
   final TextEditingController anController = TextEditingController();
 
-  FocusNode myFocusNode = FocusNode();
+  final FocusNode myFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +54,6 @@ class SearchScreen extends StatelessWidget {
                 ),
                 BlocBuilder<NewSearchBloc, NewSearchState>(
                     builder: (context, state) {
-                  
                   if (state is LoadingState) {
                     return const SizedBox(
                       height: 400,
