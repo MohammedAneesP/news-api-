@@ -21,12 +21,8 @@ class HomeScreen extends StatelessWidget {
     final kWidth = MediaQuery.sizeOf(context);
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        elevation: 0,
         title: const Text(
           "News Time",
-          style: TextStyle(
-              fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
         ),
       ),
       body: SingleChildScrollView(
@@ -151,63 +147,70 @@ class HomeScreen extends StatelessWidget {
               builder: (context, constraints) =>
                   BlocBuilder<TrendingNewsBloc, TrendingNewsState>(
                 builder: (context, state) {
-                  if (state.isLoading == true) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (state.trending.isEmpty) {
-                    return Center(
-                      child: Text(state.errorMessage),
-                    );
-                  } else {
-                    return ListView.builder(
-                      itemCount: 10,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return SizedBox(
-                          height: kheight.height * 0.15,
-                          child: SizedBox(
-                            height: kheight.height * 0.1,
-                            width: kWidth.width,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CachedNetworkImage(
-                                  imageUrl: state.trending[index].urlToImage
-                                      .toString(),
-                                  imageBuilder: (context, imageProvider) =>
-                                      Container(
-                                    width: kWidth.width * 0.25,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.cover,
+                  switch (state.runtimeType) {
+                    case LoadingTrending:
+                      return SizedBox(
+                        height: kheight.height * .2,
+                        child: const Center(child: CircularProgressIndicator()),
+                      );
+                    case GetTrending:
+                      final fetchedTrend = state as GetTrending;
+                      return ListView.builder(
+                        itemCount: 10,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return SizedBox(
+                            height: kheight.height * 0.15,
+                            child: SizedBox(
+                              height: kheight.height * 0.1,
+                              width: kWidth.width,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CachedNetworkImage(
+                                    imageUrl: fetchedTrend
+                                        .trending[index].urlToImage
+                                        .toString(),
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      width: kWidth.width * 0.25,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
+                                    placeholder: (context, url) =>
+                                        const CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
                                   ),
-                                  placeholder: (context, url) =>
-                                      const CircularProgressIndicator(),
-                                  errorWidget: (context, url, error) =>
-                                      const Icon(Icons.error),
-                                ),
-                                SizedBox(
-                                    width: kWidth.width * 0.75,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        state.trending[index].title,
-                                        maxLines: 4,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(fontSize: 18),
-                                      ),
-                                    ))
-                              ],
+                                  SizedBox(
+                                      width: kWidth.width * 0.75,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          fetchedTrend.trending[index].title,
+                                          maxLines: 4,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(fontSize: 18),
+                                        ),
+                                      ))
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                    );
+                          );
+                        },
+                      );
+
+                    default:
+                      return SizedBox(
+                        height: kheight.height * 1,
+                        child:
+                            const Center(child: Text("Something went wrong")),
+                      );
                   }
                 },
               ),

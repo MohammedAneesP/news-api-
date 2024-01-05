@@ -8,71 +8,86 @@ class TrendingNews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   BlocProvider.of<TrendingNewsBloc>(context).add(FetchTrending());
+    BlocProvider.of<TrendingNewsBloc>(context).add(FetchTrending());
     final kheight = MediaQuery.sizeOf(context);
     final kWidth = MediaQuery.sizeOf(context);
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        elevation: 0,
-        title: const Text(
-          "Trending News",
-          style: TextStyle(
-              fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
-        ),
-      ),
-      body: BlocBuilder<TrendingNewsBloc, TrendingNewsState>(
-        builder: (context, state) {
-          return ListView.separated(
-            physics: const ClampingScrollPhysics(),
-            itemBuilder: (context, index) {
-              return SizedBox(
-                height: kheight.height * 0.15,
-                child: SizedBox(
-                  height: kheight.height * 0.1,
-                  width: kWidth.width,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CachedNetworkImage(
-                        imageUrl:
-                            state.trending[index].urlToImage.toString(),
-                        imageBuilder: (context, imageProvider) => Container(
-                          margin: EdgeInsets.only(left: kWidth.width * 0.007),
-                          width: kWidth.width * 0.25,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.cover,
+   return BlocBuilder<TrendingNewsBloc, TrendingNewsState>(
+      builder: (context, state) {
+        switch (state.runtimeType) {
+          case LoadingTrending:
+            return const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          case GetTrending:
+          final fetchedTrends = 
+          state as GetTrending;
+            return Scaffold(
+              appBar: AppBar(
+                title: const Text("Trending News"),
+              ),
+              body: SafeArea(
+                child: ListView.separated(
+                  itemBuilder: (context, index) {
+                    if (index == fetchedTrends.trending.length - 1) {
+                      BlocProvider.of<TrendingNewsBloc>(context)
+                          .add(TrendingPagination());
+                    }
+                    return SizedBox(
+                      height: kheight.height * 0.15,
+                      child: SizedBox(
+                        height: kheight.height * 0.1,
+                        width: kWidth.width,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CachedNetworkImage(
+                              imageUrl: fetchedTrends.trending[index].urlToImage.toString(),
+                              imageBuilder: (context, imageProvider) => Container(
+                                margin: EdgeInsets.only(left: kWidth.width * 0.007),
+                                width: kWidth.width * 0.25,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              placeholder: (context, url) =>
+                                  const CircularProgressIndicator(),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
                             ),
-                          ),
+                            SizedBox(
+                                width: kWidth.width * 0.74,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    fetchedTrends.trending[index].title,
+                                    maxLines: 4,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(fontSize: 18),
+                                  ),
+                                ))
+                          ],
                         ),
-                        placeholder: (context, url) =>
-                            const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
                       ),
-                      SizedBox(
-                          width: kWidth.width * 0.74,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              state.trending[index].title,
-                              maxLines: 4,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(fontSize: 18),
-                            ),
-                          ))
-                    ],
-                  ),
+                    );
+                  },
+                  separatorBuilder: (context, index) => const Divider(),
+                  itemCount: fetchedTrends.trending.length,
                 ),
-              );
-            },
-            separatorBuilder: (context, index) =>const Divider(),
-            itemCount: state.trending.length,
-          );
-        },
-      ),
+              ),
+            );
+          default:
+            return const Scaffold(
+              body: Center(
+                child: Text("Something went wrong"),
+              ),
+            );
+        }
+      },
     );
   }
 }

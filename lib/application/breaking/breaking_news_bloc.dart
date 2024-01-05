@@ -42,7 +42,7 @@ class BreakingNewsBloc extends Bloc<BreakingNewsEvent, BreakingNewsState> {
       try {
         final fetching = await fetchingBreaking();
         int count = 0;
-        if (fetching.status == "ok") {
+        if (fetching.status !="null") {
           List<Article> forPaginate = [];
           for (var element in fetching.articles) {
             if (element.urlToImage != "null" &&

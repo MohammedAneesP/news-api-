@@ -23,11 +23,11 @@ List<CategoryAndName> theNameAndImage() {
 }
 
 final List<dynamic> categories = [
-  const Business(),
+  const Business(anCategory: "business"),
   const Entertainmet(anCategory: "entertainment"),
-  const Health(),
-  const Sceince(),
-  const Sports(),
+  const Health(anCategory: "health"),
+  const Sceince(anCategory: "science"),
+  const Sports(anCategory: "sports"),
 ];
 
 List<String> images = [
@@ -35,5 +35,5 @@ List<String> images = [
   "assets/entertainment.jpg",
   "assets/health.webp",
   "assets/science.webp",
-  "assets/sports.avif",
+  "assets/sports.jpg",
 ];

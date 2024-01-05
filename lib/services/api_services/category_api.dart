@@ -8,7 +8,7 @@ import 'package:news_api/widgets/apikey.dart';
 Future<News> categoryFetch(String category) async {
   final String anCategory = category.toLowerCase().trim();
   final apiParse = Uri.parse(
-      "https://newsapi.org/v2/everything?q=$anCategory&sortBy=popularity&pageSize=50&apiKey=$apiKey");
+      "https://newsapi.org/v2/everything?q=$anCategory&sortBy=popularity&pageSize=70&apiKey=$apiKey");
   final fetching = await http.get(apiParse);
   if (fetching.statusCode == HttpStatus.ok) {
     final apiDecoding = jsonDecode(fetching.body);

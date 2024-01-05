@@ -40,7 +40,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
                   continue;
                 }
               }
-            }else{
+            } else {
               break;
             }
           }
@@ -52,6 +52,43 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
         log(e.toString());
       }
     });
-    
+    on<CategoryPagination>((event, emit) async {
+      try {
+        final category = await categoryFetch(event.anCategory);
+        if (category.status != "null") {
+          List<Article> forPaginate = [];
+          int count = 0;
+          for (var element in category.articles) {
+            if (element.urlToImage != "null" &&
+                !categories.any((news) => news.title == element.title)) {
+              Uri? uri = Uri.tryParse(element.urlToImage);
+              if (uri != null && uri.isAbsolute) {
+                var response = await http.head(Uri.parse(element.urlToImage));
+                if (response.statusCode == HttpStatus.ok) {
+                  if (count < 10) {
+                    count++;
+                    forPaginate.add(element);
+                    log(element.title.toString());
+                  } else {
+                    break;
+                  }
+                } else {
+                  continue;
+                }
+              } else {
+                continue;
+              }
+            } else {
+              continue;
+            }
+          }
+          categories.addAll(forPaginate);
+          return emit(FetchCategory(fetched: categories));
+        }
+        return emit(FetchCategory(fetched: const []));
+      } catch (e) {
+        log(e.toString());
+      }
+    });
   }
 }

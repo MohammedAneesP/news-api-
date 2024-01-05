@@ -1,12 +1,13 @@
 part of 'trending_news_bloc.dart';
 
-class TrendingNewsState {
-  final bool isLoading;
-  final List<dynamic> trending;
-  final String errorMessage;
-  TrendingNewsState({required this.isLoading, required this.trending,required this.errorMessage});
+@immutable
+sealed class TrendingNewsState {}
+
+class TrendingNewsInitial extends TrendingNewsState {}
+
+class GetTrending extends TrendingNewsState{
+  final List<dynamic>trending;
+  GetTrending({required this.trending});
 }
 
-class TrendingNewsInitial extends TrendingNewsState {
-  TrendingNewsInitial() : super(isLoading: true, trending: [],errorMessage: "");
-}
+class LoadingTrending extends TrendingNewsState{}

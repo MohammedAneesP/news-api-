@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 Future<News> fetchingBreaking() async {
   final anValue = Uri.parse(
-      "https://newsapi.org/v2/everything?q=top-headlines&sortBy=popularity&pageSize=50&apiKey=$apiKey");
+      "https://newsapi.org/v2/everything?q=top-headlines&sortBy=popularity&pageSize=70&apiKey=$apiKey");
   final anResp = await http.get(anValue);
 
   if (anResp.statusCode == HttpStatus.ok) {

@@ -8,7 +8,7 @@ class FetchCategoryNews extends CategoryEvent {
   FetchCategoryNews({required this.anCategory});
 }
 
-class CatogoryPagination extends CategoryEvent {
+class CategoryPagination extends CategoryEvent {
   final String anCategory;
-  CatogoryPagination({required this.anCategory});
+  CategoryPagination({required this.anCategory});
 }
