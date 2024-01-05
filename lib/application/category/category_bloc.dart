@@ -23,12 +23,13 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
           for (var element in fetch.articles) {
             if (categories.length < 10) {
               if (element.urlToImage != "null") {
-                final anUri = Uri.tryParse(element.urlToImage);
+                Uri? anUri = Uri.tryParse(element.urlToImage);
                 if (anUri != null && anUri.isAbsolute) {
                   try {
                     final response =
                         await http.get(Uri.parse(element.urlToImage));
                     if (response.statusCode == HttpStatus.ok) {
+                      
                       categories.add(element);
                     } else {
                       continue;

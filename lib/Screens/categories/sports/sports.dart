@@ -23,7 +23,7 @@ class Sports extends StatelessWidget {
                 child: CircularProgressIndicator(),
               ),
             );
-          case GetTrending:
+          case FetchCategory:
             final anLoaded = state as FetchCategory;
             return Scaffold(
               appBar: AppBar(
@@ -32,7 +32,7 @@ class Sports extends StatelessWidget {
               body: SafeArea(
                 child: ListView.separated(
                     itemBuilder: (context, index) {
-                      if (index == state.fetched.length - 1) {
+                      if (index == anLoaded.fetched.length - 1) {
                         BlocProvider.of<CategoryBloc>(context)
                             .add(CategoryPagination(anCategory: anCategory));
                       }

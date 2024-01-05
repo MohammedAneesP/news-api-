@@ -35,7 +35,7 @@ class Entertainmet extends StatelessWidget {
                         BlocProvider.of<CategoryBloc>(context)
                             .add(CategoryPagination(anCategory: anCategory));
                       }
-                      
+
                       return SizedBox(
                         height: kheight.height * 0.15,
                         child: SizedBox(
