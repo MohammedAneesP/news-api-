@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_api/Screens/breaking_news/braking_news.dart';
+import 'package:news_api/Screens/single_article/an_article.dart';
 import 'package:news_api/Screens/trending_news/trending_newa.dart';
 import 'package:news_api/application/breaking/breaking_news_bloc.dart';
 import 'package:news_api/application/trending/trending_news_bloc.dart';
@@ -78,7 +79,14 @@ class HomeScreen extends StatelessWidget {
                         return Builder(
                           builder: (BuildContext context) {
                             return GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                 Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AnArticle(
+                                      anArticle: i),
+                                ));
+                              },
                               child: CachedNetworkImage(
                                 imageUrl: i.urlToImage,
                                 imageBuilder: (context, imageProvider) {
@@ -160,45 +168,54 @@ class HomeScreen extends StatelessWidget {
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          return SizedBox(
-                            height: kheight.height * 0.15,
+                          return GestureDetector(
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AnArticle(
+                                      anArticle: fetchedTrend.trending[index]),
+                                )),
                             child: SizedBox(
-                              height: kheight.height * 0.1,
-                              width: kWidth.width,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CachedNetworkImage(
-                                    imageUrl: fetchedTrend
-                                        .trending[index].urlToImage
-                                        .toString(),
-                                    imageBuilder: (context, imageProvider) =>
-                                        Container(
-                                      width: kWidth.width * 0.25,
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          image: imageProvider,
-                                          fit: BoxFit.cover,
+                              height: kheight.height * 0.15,
+                              child: SizedBox(
+                                height: kheight.height * 0.1,
+                                width: kWidth.width,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CachedNetworkImage(
+                                      imageUrl: fetchedTrend
+                                          .trending[index].urlToImage
+                                          .toString(),
+                                      imageBuilder: (context, imageProvider) =>
+                                          Container(
+                                        width: kWidth.width * 0.25,
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
+                                      placeholder: (context, url) =>
+                                          const CircularProgressIndicator(),
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
                                     ),
-                                    placeholder: (context, url) =>
-                                        const CircularProgressIndicator(),
-                                    errorWidget: (context, url, error) =>
-                                        const Icon(Icons.error),
-                                  ),
-                                  SizedBox(
-                                      width: kWidth.width * 0.75,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          fetchedTrend.trending[index].title,
-                                          maxLines: 4,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(fontSize: 18),
-                                        ),
-                                      ))
-                                ],
+                                    SizedBox(
+                                        width: kWidth.width * 0.75,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            fetchedTrend.trending[index].title,
+                                            maxLines: 4,
+                                            overflow: TextOverflow.ellipsis,
+                                            style:
+                                                const TextStyle(fontSize: 18),
+                                          ),
+                                        ))
+                                  ],
+                                ),
                               ),
                             ),
                           );
