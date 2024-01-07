@@ -25,6 +25,7 @@ class _BottomNavState extends State<BottomNav> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
         currentIndex: pageIndex,
         selectedFontSize: 14,
         unselectedFontSize: 14,

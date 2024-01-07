@@ -24,17 +24,22 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(
+          bottomNavigationBarTheme:
+              const BottomNavigationBarThemeData(backgroundColor: Colors.black),
           textTheme: const TextTheme(
-              bodyMedium: TextStyle(fontSize: 22),
-              bodyLarge: TextStyle(fontSize: 25, fontWeight: FontWeight.w600)),
-          scaffoldBackgroundColor: Colors.grey[200],
-          appBarTheme: AppBarTheme(
+              bodyMedium: TextStyle(fontSize: 22, color: Colors.white),
+              bodyLarge: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white)),
+          scaffoldBackgroundColor:const Color.fromARGB(135, 32, 31, 31),
+          appBarTheme: const AppBarTheme(
             centerTitle: true,
             elevation: 0,
-            iconTheme: const IconThemeData(color: Colors.black),
-            backgroundColor: Colors.grey[200],
-            titleTextStyle: const TextStyle(
-              color: Colors.black,
+            iconTheme: IconThemeData(color: Colors.white),
+             backgroundColor: Colors.black,
+            titleTextStyle: TextStyle(
+              color: Colors.white,
               fontSize: 25,
               fontWeight: FontWeight.w600,
             ),
