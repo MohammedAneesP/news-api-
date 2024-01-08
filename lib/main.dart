@@ -6,11 +6,12 @@ import 'package:news_api/application/category/category_bloc.dart';
 import 'package:news_api/application/search/new_search/new_search_bloc.dart';
 import 'package:news_api/application/trending/trending_news_bloc.dart';
 
-void main() {
+void main() { 
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+ 
   const MyApp({super.key});
 
   @override

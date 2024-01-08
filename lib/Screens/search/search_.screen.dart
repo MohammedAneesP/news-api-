@@ -32,6 +32,7 @@ class SearchScreen extends StatelessWidget {
                     SizedBox(
                         width: 290,
                         child: TextField(
+                          style:const TextStyle(color: Colors.white),
                           focusNode: myFocusNode,
                           autofocus: true,
                           controller: anController,
@@ -73,11 +74,12 @@ class SearchScreen extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 return GestureDetector(
                                   onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => AnArticle(
-                                      anArticle: state.anSearchResult[index]),
-                                )),
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => AnArticle(
+                                            anArticle:
+                                                state.anSearchResult[index]),
+                                      )),
                                   child: SizedBox(
                                     height: kheight.height * 0.15,
                                     child: SizedBox(
@@ -89,7 +91,8 @@ class SearchScreen extends StatelessWidget {
                                         children: [
                                           CachedNetworkImage(
                                             imageUrl: state
-                                                .anSearchResult[index].urlToImage
+                                                .anSearchResult[index]
+                                                .urlToImage
                                                 .toString(),
                                             imageBuilder:
                                                 (context, imageProvider) =>
@@ -104,8 +107,9 @@ class SearchScreen extends StatelessWidget {
                                             ),
                                             placeholder: (context, url) =>
                                                 const CircularProgressIndicator(),
-                                            errorWidget: (context, url, error) =>
-                                                const Icon(Icons.error),
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    const Icon(Icons.error),
                                           ),
                                           SizedBox(
                                               width: kWidth.width * 0.6,
@@ -116,7 +120,8 @@ class SearchScreen extends StatelessWidget {
                                                   state.anSearchResult[index]
                                                       .title,
                                                   maxLines: 4,
-                                                  overflow: TextOverflow.ellipsis,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                   style: const TextStyle(
                                                       fontSize: 18),
                                                 ),

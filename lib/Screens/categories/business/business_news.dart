@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_api/Screens/single_article/an_article.dart';
+import 'package:news_api/Screens/widgets/app_bar.dart';
 import 'package:news_api/application/category/category_bloc.dart';
 
 class Business extends StatelessWidget {
@@ -24,7 +25,7 @@ class Business extends StatelessWidget {
                   SliverToBoxAdapter(
                     child: SizedBox(
                       height: kheight.height,
-                      child: const CircularProgressIndicator(),
+                      child:const Center(child:  CircularProgressIndicator()),
                     ),
                   )
                 ],
@@ -37,11 +38,7 @@ class Business extends StatelessWidget {
               body: SafeArea(
                   child: CustomScrollView(
                 slivers: [
-                  const SliverAppBar(
-                    snap: true,
-                    floating: true,
-                    title: Text("Business"),
-                  ),
+                   const AnAppBar(anTitle: "Business"),
                   SliverList.separated(
                     itemBuilder: (context, index) {
                       if (index == anNews.fetched.length - 1) {

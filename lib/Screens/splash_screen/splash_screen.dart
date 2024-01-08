@@ -22,9 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: CircleAvatar(
-          child: Icon(CupertinoIcons.news,color: Colors.white,),
-        ),
+        child: Icon(CupertinoIcons.news ,color: Colors.white,size: 100,),
       ),
     );
   }
