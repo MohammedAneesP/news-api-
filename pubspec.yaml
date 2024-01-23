@@ -35,15 +35,19 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.3
+  flutter_launcher_icons: ^0.13.1
   http: null
   meta: null
-  url_launcher: 
+  url_launcher: null
 
 dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
-
+flutter_icons:
+  android: true
+  ios: true
+  image_path: assets/pngwing.com (7).png
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.
@@ -62,6 +66,7 @@ flutter:
     - assets/news.jpg
     - assets/science.webp
     - assets/sports.jpg
+    - assets/pngwing.com (7).png
     # An image asset can refer to one or more resolution-specific "variants", see
     # https://flutter.dev/assets-and-images/#resolution-aware
     # For details regarding adding assets from package dependencies, see
