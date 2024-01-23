@@ -57,8 +57,6 @@ class NewSearchBloc extends Bloc<NewSearchEvent, NewSearchState> {
               }
             }
           }
-
-          log(searchArticle.length.toString());
           emit(SearchedResult(anSearchResult: searchArticle));
         }
       } catch (e) {

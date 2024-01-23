@@ -69,7 +69,6 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
                   if (count < 10) {
                     count++;
                     forPaginate.add(element);
-                    log(element.title.toString());
                   } else {
                     break;
                   }

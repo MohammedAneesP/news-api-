@@ -71,7 +71,6 @@ class TrendingNewsBloc extends Bloc<TrendingNewsEvent, TrendingNewsState> {
                   if (count < 10) {
                     count++;
                     anTrending.add(element);
-                    log(element.title.toString());
                   } else {
                     break;
                   }
